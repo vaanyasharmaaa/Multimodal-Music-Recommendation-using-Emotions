@@ -1,0 +1,86 @@
+# Model Configuration Parameters
+
+# Global Settings
+emotion_classes: 6
+emotion_labels: ['anger', 'disgust', 'fear', 'happiness', 'neutrality', 'sadness']
+random_seed: 42
+
+# Image Model Configuration
+image_model:
+  architecture: 'resnet50'
+  input_size: [224, 224, 3]
+  batch_size: 32
+  epochs: 50
+  learning_rate: 0.001
+  dropout_rate: 0.5
+  optimizer: 'adam'
+  loss_function: 'categorical_crossentropy'
+  early_stopping_patience: 10
+  reduce_lr_patience: 5
+  reduce_lr_factor: 0.1
+  
+  # Data Augmentation
+  augmentation:
+    rotation_range: 15
+    horizontal_flip: true
+    brightness_range: [0.8, 1.2]
+    contrast_range: [0.8, 1.2]
+    zoom_range: 0.1
+
+# Text Model Configuration  
+text_model:
+  architecture: 'distilbert-base-uncased'
+  max_sequence_length: 512
+  batch_size: 16
+  epochs: 10
+  learning_rate: 2e-5
+  warmup_steps_ratio: 0.1
+  dropout_rate: 0.3
+  optimizer: 'adamw'
+  loss_function: 'categorical_crossentropy'
+  label_smoothing: 0.1
+  gradient_accumulation_steps: 2
+
+# Video Model Configuration
+video_model:
+  spatial_architecture: '3d_resnet18'
+  temporal_architecture: 'bidirectional_lstm'
+  sequence_length: 16
+  frame_size: [224, 224, 3]
+  batch_size: 8
+  epochs: 30
+  learning_rate: 0.0001
+  dropout_rate: 0.4
+  lstm_units: 128
+  optimizer: 'adam'
+  loss_function: 'categorical_crossentropy'
+  temporal_consistency_weight: 0.1
+
+# Multi-Modal Fusion Configuration
+multimodal_model:
+  fusion_strategy: 'attention_based'
+  attention_units: 256
+  dense_layers: [512, 256]
+  dropout_rate: 0.3
+  batch_size: 16
+  epochs: 20
+  learning_rate: 0.0001
+  optimizer: 'adam'
+  loss_function: 'categorical_crossentropy'
+  
+  # Feature dimensions from pre-trained models
+  image_feature_dim: 2048
+  text_feature_dim: 768
+  video_feature_dim: 256
+
+# Training Configuration
+training:
+  validation_split: 0.2
+  test_split: 0.2
+  stratify: true
+  cross_validation_folds: 5
+  
+  # Callbacks
+  save_best_only: true
+  monitor_metric: 'val_accuracy'
+  verbose: 1
