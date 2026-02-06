@@ -5,8 +5,8 @@ from keras.preprocessing import image
 import cv2
 import numpy as np
 
-face_classifier = cv2.CascadeClassifier(r'C:\Users\Shubhanshu\college\Major\Emotion_Detection_CNN\haarcascade_frontalface_default.xml')
-classifier =load_model(r'C:\Users\Shubhanshu\college\Major\Emotion_Detection_CNN\model.h5')
+face_classifier = cv2.CascadeClassifier(r'C:\Users\HP\Desktop\code\Multimodal-Music-Recommendation-using-Emotions\haarcascade_frontalface_default.xml')
+classifier =load_model(r'C:\Users\HP\Desktop\code\Multimodal-Music-Recommendation-using-Emotions\model.h5')
 
 emotion_labels = ['Angry','Disgust','Fear','Happy','Neutral', 'Sad', 'Surprise']
 
@@ -40,6 +40,8 @@ while True:
             cv2.putText(frame,'No Faces',(30,80),cv2.FONT_HERSHEY_SIMPLEX,1,(0,255,0),2)
     cv2.imshow('Emotion Detector',frame)
     if cv2.waitKey(1) & 0xFF == ord('q'):
+        break
+    if cv2.getWindowProperty('Emotion Detector', cv2.WND_PROP_VISIBLE) < 1:
         break
 
 cap.release()
